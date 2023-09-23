@@ -40,5 +40,50 @@ namespace RecapProject1
                 cbxCategory.ValueMember = "CategoryId";
             }
         }
+        private void ListProductsByCategory(int categoryId)
+        {
+            using (NorthWindContext context = new NorthWindContext())
+            {
+                dgwProduct.DataSource = context.Products.Where(p=>p.CategoryId==categoryId).ToList();
+
+            }
+        }
+        private void ListProductByProductName(string key)
+        {
+            using (NorthWindContext context = new NorthWindContext())
+            {
+                dgwProduct.DataSource = context.Products.Where(p => p.ProductName.ToLower().Contains(key.ToLower()).ToList();
+
+            }
+        }
+
+
+        private void cbxCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ListProductsByCategory(Convert.ToInt32(cbxCategory.SelectedValue));
+
+            }
+            catch
+            {
+
+                
+            }
+        }
+
+        private void tbxSearch_TextChanged(object sender, EventArgs e)
+        {
+            string key = tbxSearch.Text;
+            if (string.IsNullOrEmpty(key))
+            {
+                ListProducts();
+            }
+            else
+            {
+                ListProductByProductName(tbxSearch.Text);
+            }
+            ListProductByProductName(tbxSearch.Text);
+        }
     }
 }
